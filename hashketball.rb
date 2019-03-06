@@ -118,15 +118,11 @@ team_stats = {
 end
 
 
-def num_points_scored(player)
-  scores = game_hash
-  scores.each do |side, team_properties| 
+def num_points_scored(name)
+  game_hash.each do |side, team_properties| 
    team_properties.each do |team_info, value| 
-     if value.include?(player) 
-    # value.each do |key, values|
-      #if key == :points
-      # values.each do |keys, vals|
-        return scores[side][team_info][player][:points]
+     if value.include?(name) 
+        return value[name][:points]
       end
     end
   end
@@ -240,23 +236,23 @@ end
 
 # def most_points_scored
 #   most_points = game_hash
-#   num = 0
-#   person = ""
+#   array = []
 #   most_points.each do |side, team_properties|
 #     team_properties.each do |team_info, player_info|
 #       if team_info == :players
-#         player_info.each do |players, info|
-#           info.each do |key, value|
-#             if key == :points
-#               if num < value
-#                 person = players
-#                 num = value
-#               return most_points[side][team_info][person]
-#             end
-#             end
-#           end
-#         end
+#         array << player_info[:points]
 #       end
 #     end
 #   end
+#   return array.max
 # end
+
+
+def most_points_scored
+  game_hash.each do |side, team_properties|
+    team_properties.max_by do |team_info, player_info|
+      return player_info[:points]
+    end
+  end
+end
+
